@@ -1,0 +1,6 @@
+.grid-layout {
+
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 2fr));
+  }

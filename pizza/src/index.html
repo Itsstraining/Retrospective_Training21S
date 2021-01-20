@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>PizzaShop</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    html {
+
+      box-sizing: border-box;
+      --bgColorMenu: #000000;
+      --duration: .7s;
+
+    }
+
+    html *,
+    html *::before,
+    html *::after {
+
+      box-sizing: inherit;
+
+    }
+
+    body {
+
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      transition: background-color var(--duration);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+
+
+    .menu {
+
+      display: flex;
+      width: 32.05em;
+      font-size: 1.5em;
+      padding: 0 2.85em;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bgColorMenu);
+
+    }
+
+    .menu__item {
+
+      all: unset;
+      flex-grow: 1;
+      z-index: 100;
+      display: flex;
+      cursor: pointer;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55em 0 0.85em;
+      transition: transform var(--duration);
+
+    }
+
+    .menu__item::before {
+
+      content: "";
+      z-index: -1;
+      width: 4.2em;
+      height: 4.2em;
+      border-radius: 50%;
+      position: absolute;
+      transform: scale(0);
+      transition: background-color var(--duration), transform var(--duration);
+
+    }
+
+
+    .menu__item.active {
+      transform: translate3d(0, -.8em, 0);
+    }
+
+    .menu__item.active::before {
+
+      transform: scale(1);
+      background-color: var(--bgColorItem);
+
+    }
+
+    .icon {
+
+      width: 2.6em;
+      height: 2.6em;
+      stroke: white;
+      fill: transparent;
+      stroke-width: 1pt;
+      stroke-miterlimit: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 400;
+
+    }
+
+    .menu__item.active .icon {
+      animation: strok 1.5s reverse;
+
+    }
+
+    @keyframes strok {
+      100% {
+        stroke-dashoffset: 400;
+      }
+    }
+
+    .menu__border {
+
+      left: 0;
+      bottom: 99%;
+      width: 10.9em;
+      height: 2.4em;
+      position: absolute;
+      clip-path: url(#menu);
+      background-color: var(--bgColorMenu);
+      transition: transform var(--duration);
+    }
+
+    .svg-container {
+
+      width: 0;
+      height: 0;
+    }
+
+
+    @media screen and (max-width: 50em) {
+      .menu {
+        font-size: .8em;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <app-root></app-root>
+  <script>
+    setTimeout(() => {
+      let body = document.body;
+      let menu = document.querySelectorAll(".menu__item");
+      let menuBorder = document.querySelector(".menu__border");
+      let active;
+
+      function clickItem() {
+
+        active = document.querySelector("button.active");
+
+        if (active) {
+          active.classList.remove("active");
+        }
+
+        this.classList.add("active");
+        let box = this.getBoundingClientRect();
+
+        active = this;
+        body.style.backgroundColor = active.style.getPropertyValue("--bgColorBody");
+
+        offsetMenuBorder(box, menuBorder);
+
+      }
+
+
+      function offsetMenuBorder(box, menuBorder) {
+        let left = Math.floor(box.left - menuBorder.closest("menu").offsetLeft - (menuBorder.offsetWidth - box
+          .width) / 2) + "px";
+        menuBorder.style.transform = `translate3d(${left}, 0 , 0)`
+      }
+
+
+      menu.forEach(item => {
+        item.addEventListener("click", clickItem);
+      })
+
+
+
+    }, 1000);
+
+  </script>
+</body>
+
+</html>

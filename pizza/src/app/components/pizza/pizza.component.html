@@ -1,0 +1,10 @@
+<div class="card">
+    <img [src]="pizza.imgUrl" [alt]="pizza.name" style="width:100%">
+    <div class="container">
+      <h4><b>{{pizza.id}}</b></h4> 
+      <p>{{pizza.name}}</p>
+      <p>Giá: {{pizza.price *1000}} VND</p>
+      <p *ngIf="pizza.inStock">Còn Hàng</p>
+      <p *ngIf="!pizza.inStock">hết hàng</p>
+    </div>
+  </div>
